@@ -1,6 +1,6 @@
 package com.csse.util;
 
-import java.sql.Connection;
+import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
@@ -32,7 +32,7 @@ public class EmployeeDatabaseContext extends Configuration  {
 			try {
 				
 				Class.forName(driverNameString);
-				connection = DriverManager.getConnection(urlString, userNameString,passwordString);
+				connection = (Connection)DriverManager.getConnection(urlString, userNameString,passwordString);
 				
 				return connection;
 				
