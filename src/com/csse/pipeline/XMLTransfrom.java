@@ -51,7 +51,7 @@ public class XMLTransfrom {
 	public static ArrayList<Map<String, String>> xmlPaths() throws RuntimeException,ParserConfigurationException,NullPointerException,XPathExpressionException,IllegalArgumentException,Exception {
 
 		Document _doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-				.parse("src/e/EmployeeResponse.xml");
+				.parse("src/com/csse/config/EmployeeResponse.xml");
 		
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		int n = Integer.parseInt((String) xPath.compile("count(//Employees/Employee)").evaluate(_doc, XPathConstants.STRING));
