@@ -12,6 +12,11 @@ public class Main {
 			
 			EmployeeService service = new EmployeeService();
 			service.employeeFromXml();
+			service.employeeTableCreate();
+			service.employeesAdd();
+			service.employeeGetById("EMP10004");
+			service.employeeDelete("EMP10001");
+			service.employeeDisplay();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

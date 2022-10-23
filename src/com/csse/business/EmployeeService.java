@@ -10,7 +10,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
 import com.csse.domain.Employee;
+import com.csse.interfaces.IEmployeeDatabaseContext;
 import com.csse.pipeline.XMLTransfrom;
+import com.csse.util.EmployeeDatabaseContext;
+import com.csse.util.QueryCommand;
 
 import java.sql.PreparedStatement;
 
@@ -27,11 +30,16 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	private final ArrayList<Employee> employeeList= new ArrayList<Employee>();
 	
 	private static final Logger log = Logger.getLogger(EmployeeService.class.getName());
-	private static Connection connection ;
-
-	private static Statement statement ;
+	private static Connection connection;
+	private static Statement statement;
 
 	private PreparedStatement preparedStatement;
+	
+	@SuppressWarnings("static-access")
+	public EmployeeService() {
+		
+		this.connection = EmployeeDatabaseContext.databaseContextBuilder();
+	}
 	
 	/**
 	 * 
@@ -52,25 +60,60 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	public void employeeFromXml() {
 		try {
 			for (Map<String, String> docMap : XMLTransfrom.xmlPaths()) {
+				
 				Employee employee= new Employee();
+				
 				employee.setEmployeeId(docMap.get("XpathEmployeeIDKey"));
 				employee.setFullName(docMap.get("XpathEmployeeNameKey"));
 				employee.setAddress(docMap.get("XpathEmployeeAddressKey"));
 				employee.setFacultyName(docMap.get("XpathFacultyNameKey"));
 				employee.setDepartment(docMap.get("XpathDepartmentKey"));
 				employee.setDesignation(docMap.get("XpathDesignationKey"));
+				
 				employeeList.add(employee);
+				
 				System.out.println(employee.toString() + "\n");
 			}
 		} catch (IllegalArgumentException e) {
+			
 			log.log(Level.SEVERE,e.getMessage());
+			
 		}catch (NullPointerException e) {
+			
 			log.log(Level.SEVERE,e.getMessage());
+			
 		}catch (RuntimeException e) {
+			
 			log.log(Level.SEVERE,e.getMessage());
+			
 		}catch (ParserConfigurationException e) {
+			
 			log.log(Level.SEVERE,e.getMessage());
+			
 		}catch (XPathExpressionException e) {
+			
+			log.log(Level.SEVERE,e.getMessage());
+		}
+		catch (Exception e) {
+			
+			log.log(Level.SEVERE,e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * Creates Employee table inside sql database
+	 * @return void
+	 * @exception java.sql.SQLException
+	 */
+
+	@Override
+	public void employeeTableCreate() {
+		try {
+			statement = connection.createStatement();
+			statement.executeUpdate(QueryCommand.query("q2"));
+			statement.executeUpdate(QueryCommand.query("q1"));
+		} catch (SQLException e) {
 			log.log(Level.SEVERE,e.getMessage());
 		}
 		catch (Exception e) {
@@ -78,34 +121,143 @@ public class EmployeeService extends EmployeeTemplateMethod {
 		}
 		
 	}
-
-	@Override
-	public void employeeTableCreate() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
+	/**
+	 * Inserts a new employee to employee table in sql database
+	 * @return void
+	 * @exception java.sql.SQLException
+	 */
 	@Override
 	public void employeesAdd() {
-		// TODO Auto-generated method stub
+		try {
+			preparedStatement = connection.prepareStatement(QueryCommand.query("q3"));
+			connection.setAutoCommit(false);
+			
+			for(Employee employee: employeeList) {
+				preparedStatement.setString(1, employee.getEmployeeId());
+				preparedStatement.setString(2, employee.getFullName());
+				preparedStatement.setString(3, employee.getAddress());
+				preparedStatement.setString(4, employee.getFacultyName());
+				preparedStatement.setString(5, employee.getDepartment());
+				preparedStatement.setString(6, employee.getDesignation());
+				preparedStatement.addBatch();
+			}
+			preparedStatement.executeBatch();
+			connection.commit();
+		
+		}catch (SQLException e) {
+			log.log(Level.SEVERE,e.getMessage());
+		} catch (Exception e) {
+			log.log(Level.SEVERE,e.getMessage());
+		}
+		
 		
 	}
+	
+	/**
+	 * provides employee information for given employee id
+	 * @return void
+	 * @param String
+	 * @exception java.sql.SQLException
+	 */
 
 	@Override
 	public void employeeGetById(String employeeId) {
-		// TODO Auto-generated method stub
+		Employee employee = new Employee();
+		try {
+			preparedStatement = connection.prepareStatement(QueryCommand.query("q4"));
+			preparedStatement.setString(1, employeeId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				employee.setEmployeeId(resultSet.getString(1));
+				employee.setFullName(resultSet.getString(2));
+				employee.setAddress(resultSet.getString(3));
+				employee.setFacultyName(resultSet.getString(4));
+				employee.setDepartment(resultSet.getString(5));
+				employee.setDesignation(resultSet.getString(6));
+			}
+			
+			
+			ArrayList<Employee> empList = new ArrayList<Employee>();
+			empList.add(employee);
+			//employeeOutput(empList);
+		}catch (SQLException e) {
+			log.log(Level.SEVERE,e.getMessage());
+		} catch (Exception e) {
+			log.log(Level.SEVERE,e.getMessage());
+		}
 		
 	}
+	
+	/**
+	 * read employee table from sql database
+	 * @return void
+	 * @param String
+	 * @exception java.sql.SQLException
+	 */
 
 	@Override
 	public void employeeDelete(String employeeId) {
-		// TODO Auto-generated method stub
+		try {
+			preparedStatement = connection.prepareStatement(QueryCommand.query("q6"));
+			preparedStatement.setString(1, employeeId);
+			preparedStatement.executeUpdate();
+		}catch (SQLException e) {
+			log.log(Level.SEVERE,e.getMessage());
+		} catch (Exception e) {
+			log.log(Level.SEVERE,e.getMessage());
+		}
 		
 	}
 
 	@Override
 	public void employeeDisplay() {
-		// TODO Auto-generated method stub
+		ArrayList<Employee> employees = new ArrayList<Employee>();
+		try {
+			preparedStatement = connection.prepareStatement(QueryCommand.query("q5"));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Employee employee = new Employee();
+				employee.setEmployeeId(resultSet.getString(1));
+				employee.setFullName(resultSet.getString(2));
+				employee.setAddress(resultSet.getString(3));
+				employee.setFacultyName(resultSet.getString(4));
+				employee.setDepartment(resultSet.getString(5));
+				employee.setDesignation(resultSet.getString(6));
+				employees.add(employee);
+				
+			}
+		}catch (SQLException e) {
+			log.log(Level.SEVERE,e.getMessage());
+		} catch (Exception e) {
+			log.log(Level.SEVERE,e.getMessage());
+		}
+		//employeeOutput(employees);
+		
+	}
+	
+	/**
+	 * displays list of employees for given employees list
+	 * @return void
+	 * @param ArrayList<Employee>
+	 * @exception java.sql.SQLException
+	 */
+	
+	@Override
+	public void employeeOutput(ArrayList<Employee> employeeList) {
+		System.out.println("Employee ID" + "\t\t" + "Full Name" + "\t\t" + "Address" + "\t\t" + "Faculty Name" + "\t\t"
+				+ "Department" + "\t\t" + "Designation" + "\n");
+		System.out
+				.println("================================================================================================================");
+		
+		
+		for(Employee employee : employeeList) {
+			System.out.println(employee.getEmployeeId() + "\t" + employee.getFullName() + "\t\t"
+					+ employee.getAddress() + "\t" + employee.getFacultyName() + "\t" + employee.getDepartment() + "\t"
+					+ employee.getDesignation() + "\n");
+			System.out
+			.println("----------------------------------------------------------------------------------------------------------------");
+		}
 		
 	}
 

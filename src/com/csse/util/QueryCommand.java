@@ -19,7 +19,7 @@ public class QueryCommand extends Configuration {
 		
 			
 		_nodeList = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-				.parse(new File("src/com/csse/EmployeeQuery.xml"))
+				.parse(new File("src/com/csse/config/EmployeeQuery.xml"))
 				.getElementsByTagName(_BYTAG_NAME_STRING);
 		
 		for (int x = 0; x < _nodeList.getLength(); x++) {
