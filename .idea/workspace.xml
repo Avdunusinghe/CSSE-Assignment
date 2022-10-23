@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75bb581a-1718-48de-8fa0-76a3d4b2597b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/core/application/common/ApplicationConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/application/common/configuration/Configuration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/application/common/interfaces/IEmployeeDatabaseContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/config/config.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/data/EmployeeDatabaseContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/data/configuration/Employee-modified.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/data/configuration/EmployeeQuery.out.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/data/configuration/EmployeeQuery.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/data/configuration/EmployeeRequest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/data/configuration/EmployeeResponse.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/services/EmployeeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/application/pipeline/XSLTransform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/application/common/ApplicationConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/application/common/ApplicationConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/application/common/configuration/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/application/common/configuration/Configuration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/application/template/EmployeeTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/application/template/EmployeeTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/data/EmployeeDatabaseContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/data/EmployeeDatabaseContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/services/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/services/EmployeeService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,11 +26,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/core/application/common/ApplicationConstants.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2GWIXhX6396S2FW5vArgx1RE5k7" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -71,12 +70,20 @@
       <option name="project" value="LOCAL" />
       <updated>1666501236415</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add New Changes">
+      <created>1666513260615</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1666513260615</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Template Design Pattern Configuration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Template Design Pattern Configuration" />
+    <MESSAGE value="Add New Changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add New Changes" />
   </component>
 </project>

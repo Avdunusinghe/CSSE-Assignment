@@ -17,8 +17,6 @@ public abstract class EmployeeTemplate {
 
         addEmployee();
 
-
-
         employeeDisplay();
     }
 

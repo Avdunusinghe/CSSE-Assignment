@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class Configuration {
     public static final Properties properties = new Properties();
-    public static final Logger log = Logger.getLogger(Configuration.class.getName());
+    public static final Logger logger = Logger.getLogger(Configuration.class.getName());
 
     static {
 
@@ -24,7 +24,7 @@ public class Configuration {
             properties.load(Configuration.class.getResourceAsStream(ApplicationConstants.PROPERTY_FILE));
 
         } catch (IOException exception) {
-            log.log(Level.SEVERE, exception.getMessage());
+            logger.log(Level.SEVERE, exception.getMessage());
         }
     }
 }

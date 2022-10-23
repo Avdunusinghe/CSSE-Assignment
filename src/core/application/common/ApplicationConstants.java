@@ -1,4 +1,7 @@
 package core.application.common;
+
+import java.text.MessageFormat;
+
 /*
  * this common constant file use for XML based application
  * */
@@ -43,16 +46,16 @@ public class ApplicationConstants {
     public static final String REQUEST_XML_PATH = "REQUEST_XML_PATH";
 
     /** constant for driver name key of MySQL database in config.properties */
-    public static final String DRIVER_NAME = "driverName";
+    public static final String DATABASE_CONTEXT_DRIVER_NAME = "driverName";
 
     /** constant for user name key of MySQL database in config.properties */
-    public static final String USERNAME = "username";
+    public static final String DATABASE_CONTEXT_USERNAME = "username";
 
     /** constant for URL key of mySQL database in config.properties */
-    public static final String URL = "url";
+    public static final String DATABASE_CONTEXT_CONNECTION_STRING = "url";
 
     /** constant for password key of MySQL database in config.properties */
-    public static final String PASSWORD = "password";
+    public static final String DATABASE_CONTEXT_PASSWORD = "password";
 
     /** constant for Query id one */
     public static final String QUERY_ONE = "q1";
@@ -92,4 +95,40 @@ public class ApplicationConstants {
 
     /** constant for Column index seven */
     public static final int COLUMN_INDEX_SEVEN = 7;
+
+    public static class TransformUtil{
+
+        public static final String BASE_PATH = "//Employees/Employee[";
+
+        public static final String SUB_PATH_EMP_ID ="]/EmployeeID/text()";
+        public static final String SUB_PATH_EMP_FULL_NAME ="]/EmployeeFullName/text()";
+        public static final String SUB_PATH_EMP_ADDRESS ="]/EmployeeFullAddress/text()";
+        public static final String SUB_PATH_EMP_FACULTY_NAME ="]/FacultyName/text()";
+        public static final String SUB_PATH_EMP_DEPARTMENT ="]/Department/text()";
+        public static final String SUB_PATH_EMP_DESIGNATION ="]/Designation/text()";
+
+        public static final String XPATH_EMPLOYEE_ID = "XpathEmployeeIDKey";
+        public static final String XPATH_EMPLOYEE_NAME = "XpathEmployeeNameKey";
+        public static final String XPATH_EMPLOYEE_ADDRESS = "XpathEmployeeAddressKey";
+        public static final String XPATH_EMPLOYEE_FACULTY = "XpathFacultyNameKey";
+        public static final String XPATH_EMPLOYEE_DEPARTMENT = "XpathDepartmentKey";
+        public static final String XPATH_EMPLOYEE_DESIGNATION = "XpathDesignationKey";
+
+        public static final String EMPLOYEE_REQUEST_PATH_STRING  = "/infrastructure/data/configuration/EmployeeResponse.xmlEmployeeRequest.xml";
+        public static final String EMPLOYEE_MODIFIED_PATH_STRING = "/infrastructure/data/configuration/Employee-modified.xsl";
+        public static final String EMPLOYEE_RESPONSE_PATH_STRING = "/infrastructure/data/configuration/EmployeeResponse.xml";
+
+        public static final String COUNTER_PATH = "count(//Employees/Employee)";
+
+        /*
+         *
+         * This method concatenate,String for compile path
+         *
+         * */
+
+        public static String getCompliePath(int number,String path2) {
+            String message = MessageFormat.format("{0}" + "{1}"+ "{2}",BASE_PATH, number, path2);
+            return message;
+        }
+    }
 }
