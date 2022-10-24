@@ -30,16 +30,16 @@ import java.util.Map;
 public class EmployeeService extends EmployeeTemplateMethod {
 	private final ArrayList<Employee> employeeList= new ArrayList<Employee>();
 	
-	private static final Logger log = Logger.getLogger(EmployeeService.class.getName());
+	private static final Logger logger = Logger.getLogger(EmployeeService.class.getName());
 	private static Connection connection = null;
 	private static Statement statement;
 
 	private PreparedStatement preparedStatement;
 	
-	@SuppressWarnings("static-access")
+	
 	public EmployeeService() {
 		
-		this.connection = EmployeeDatabaseContext.databaseContextBuilder();
+		connection = EmployeeDatabaseContext.databaseContextBuilder();
 	}
 	
 	/**
@@ -73,31 +73,31 @@ public class EmployeeService extends EmployeeTemplateMethod {
 				
 				employeeList.add(employee);
 				
-				System.out.println(employee.toString() + "\n");
+				
 			}
 		} catch (IllegalArgumentException e) {
 			
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 			
 		}catch (NullPointerException e) {
 			
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 			
 		}catch (RuntimeException e) {
 			
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 			
 		}catch (ParserConfigurationException e) {
 			
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 			
 		}catch (XPathExpressionException e) {
 			
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 		}
 		catch (Exception e) {
 			
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 		}
 		
 	}
@@ -113,15 +113,16 @@ public class EmployeeService extends EmployeeTemplateMethod {
 		try {
 			
 			statement = connection.createStatement();
-			statement.executeUpdate(QueryCommand.query("q2"));
-			statement.executeUpdate(QueryCommand.query("q1"));
+			statement.executeUpdate(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_TWO));
+			statement.executeUpdate(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_ONE));
 			
 		} catch (SQLException e) {
 			
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 		}
 		catch (Exception e) {
-			log.log(Level.SEVERE,e.getMessage());
+			
+			logger.log(Level.SEVERE,e.getMessage());
 		}
 		
 	}
@@ -134,10 +135,12 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	@Override
 	public void employeesAdd() {
 		try {
-			preparedStatement = connection.prepareStatement(QueryCommand.query("q3"));
+			
+			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_THREE));
 			connection.setAutoCommit(false);
 			
 			for(Employee employee: employeeList) {
+				
 				preparedStatement.setString(1, employee.getEmployeeId());
 				preparedStatement.setString(2, employee.getFullName());
 				preparedStatement.setString(3, employee.getAddress());
@@ -149,10 +152,13 @@ public class EmployeeService extends EmployeeTemplateMethod {
 			preparedStatement.executeBatch();
 			connection.commit();
 		
-		}catch (SQLException e) {
-			log.log(Level.SEVERE,e.getMessage());
-		} catch (Exception e) {
-			log.log(Level.SEVERE,e.getMessage());
+		}catch (SQLException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (Exception ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
 		}
 		
 		
@@ -167,11 +173,15 @@ public class EmployeeService extends EmployeeTemplateMethod {
 
 	@Override
 	public void employeeGetById(String employeeId) {
+		
 		Employee employee = new Employee();
+		
 		try {
-			preparedStatement = connection.prepareStatement(QueryCommand.query("q4"));
+			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_FOUR));
 			preparedStatement.setString(1, employeeId);
+			
 			ResultSet resultSet = preparedStatement.executeQuery();
+			
 			while (resultSet.next()) {
 				employee.setEmployeeId(resultSet.getString(1));
 				employee.setFullName(resultSet.getString(2));
@@ -182,13 +192,19 @@ public class EmployeeService extends EmployeeTemplateMethod {
 			}
 			
 			
-			ArrayList<Employee> empList = new ArrayList<Employee>();
-			empList.add(employee);
-			employeeOutput(empList);
-		}catch (SQLException e) {
-			log.log(Level.SEVERE,e.getMessage());
-		} catch (Exception e) {
-			log.log(Level.SEVERE,e.getMessage());
+			ArrayList<Employee> employeeList = new ArrayList<Employee>();
+			
+			employeeList.add(employee);
+			
+			employeeOutput(employeeList);
+			
+		}catch (SQLException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (Exception ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
 		}
 		
 	}
@@ -203,13 +219,13 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	@Override
 	public void employeeDelete(String employeeId) {
 		try {
-			preparedStatement = connection.prepareStatement(QueryCommand.query("q6"));
+			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_SIX));
 			preparedStatement.setString(1, employeeId);
 			preparedStatement.executeUpdate();
 		}catch (SQLException e) {
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 		} catch (Exception e) {
-			log.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE,e.getMessage());
 		}
 		
 	}
@@ -218,8 +234,10 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	public void employeeDisplay() {
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 		try {
-			preparedStatement = connection.prepareStatement(QueryCommand.query("q5"));
+			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_FIVE));
+			
 			ResultSet resultSet = preparedStatement.executeQuery();
+			
 			while (resultSet.next()) {
 				Employee employee = new Employee();
 				employee.setEmployeeId(resultSet.getString(1));
@@ -232,11 +250,15 @@ public class EmployeeService extends EmployeeTemplateMethod {
 				
 			}
 		}catch (SQLException e) {
-			log.log(Level.SEVERE,e.getMessage());
+			
+			logger.log(Level.SEVERE,e.getMessage());
+			
 		} catch (Exception e) {
-			log.log(Level.SEVERE,e.getMessage());
+			
+			logger.log(Level.SEVERE,e.getMessage());
 		}
-		//employeeOutput(employees);
+		
+		employeeOutput(employees);
 		
 	}
 	
