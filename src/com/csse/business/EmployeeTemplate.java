@@ -6,27 +6,28 @@ import com.csse.domain.Employee;
 
 public abstract class EmployeeTemplate {
 	
-	public abstract void employeeFromXml();
+	public abstract void configureemployeeDetailsFromXml();
 	
-	public abstract void employeeTableCreate();
+	public abstract void applyConfigurationEmployeeEntity();
 	
-	public abstract void employeesAdd();
+	public abstract void saveEmployee();
 	
 	public abstract void employeeGetById(String employeeId);
 	
 	public abstract void employeeDelete(String employeeId);
 	
-	public abstract void employeeDisplay();
+	public abstract void getEmployeeDetails();
 	
-	public abstract void employeeOutput(ArrayList<Employee> employeeList);
+	public abstract void dispalyEmployeeDetails(ArrayList<Employee> employeeList);
 	
-	public final void employeeOperation() {
+	//Template method
+	public final void applyemployeeOperation() {
 		
-		employeeFromXml();
+		configureemployeeDetailsFromXml();
 		
-		employeeTableCreate();
+		applyConfigurationEmployeeEntity();
 		
-		employeesAdd();
+		saveEmployee();
 		
 	}
 }

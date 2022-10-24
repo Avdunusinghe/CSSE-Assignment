@@ -54,22 +54,22 @@ public class XMLTransfrom {
 				.parse(ApplicationConstants.XMLTransfrom.EMPLOYEE_RESPONSE_PATH_STRING);
 		
 		XPath xPath = XPathFactory.newInstance().newXPath();
-		int number = Integer.parseInt((String) xPath.compile(ApplicationConstants.XMLTransfrom.COUNTER_PATH).evaluate(document, XPathConstants.STRING));
-		for (int i = 1; i <= number; i++) {
+		int counter = Integer.parseInt((String) xPath.compile(ApplicationConstants.XMLTransfrom.COUNTER_PATH).evaluate(document, XPathConstants.STRING));
+		for (int index = 1; index <= counter; index++) {
 			
 			employeeDetails = new HashMap<String, String>();
 			
 			employeeDetails.put(
 					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ID_KEY, 
 					(String) xPath.compile(
-							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_ID)
+							ApplicationConstants.XMLTransfrom.BASE_PATH + index + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_ID)
 					.evaluate(document, XPathConstants.STRING
 					));
 			
 			employeeDetails.put(
 					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_NAME_KEY, 
 					(String) xPath.compile(
-							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_FULL_NAME)
+							ApplicationConstants.XMLTransfrom.BASE_PATH + index + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_FULL_NAME)
 					.evaluate(document, XPathConstants.STRING
 					));
 			
@@ -77,7 +77,7 @@ public class XMLTransfrom {
 			employeeDetails.put(
 					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ADDRESS_KEY, 
 					(String) xPath.compile(
-							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_ADDRESS)
+							ApplicationConstants.XMLTransfrom.BASE_PATH + index + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_ADDRESS)
 					.evaluate(document, XPathConstants.STRING
 					));
 			
@@ -85,7 +85,7 @@ public class XMLTransfrom {
 			employeeDetails.put(
 					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_FACULTY_KEY,
 					(String) xPath.compile(
-							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_FACULTY_NAME)
+							ApplicationConstants.XMLTransfrom.BASE_PATH + index + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_FACULTY_NAME)
 					.evaluate(document, XPathConstants.STRING
 					));
 			
@@ -93,13 +93,13 @@ public class XMLTransfrom {
 			employeeDetails.put(
 					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DEPARTMENT_KEY,
 					(String) xPath.compile(
-							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_DEPARTMENT)
+							ApplicationConstants.XMLTransfrom.BASE_PATH + index + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_DEPARTMENT)
 					.evaluate(document, XPathConstants.STRING
 					));
 			
 			
 			employeeDetails.put(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION_KEY, 
-					(String) xPath.compile(ApplicationConstants.XMLTransfrom.BASE_PATH  + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_DESIGNATION )
+					(String) xPath.compile(ApplicationConstants.XMLTransfrom.BASE_PATH  + index + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_DESIGNATION )
 					.evaluate(document, XPathConstants.STRING
 					));
 			

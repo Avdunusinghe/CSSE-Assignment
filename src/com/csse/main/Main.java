@@ -46,10 +46,12 @@ public class Main {
 			}
 			
 			EmployeeTemplate service = new EmployeeService();
-			service.employeeOperation();
+			
+			service.applyemployeeOperation();
 			//service.employeeGetById("EMP10004");
 			//service.employeeDelete("EMP10001");
-			service.employeeDisplay();
+			service.getEmployeeDetails();
+			
 		} catch (TransformerFactoryConfigurationError  ex) {
 			
 			logger.log(Level.SEVERE,  ex.getMessage());

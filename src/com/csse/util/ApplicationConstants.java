@@ -1,6 +1,4 @@
 package com.csse.util;
-
-import java.text.MessageFormat;
 /**
  * 
  * This Class includes all the common constants used by the application
@@ -147,16 +145,6 @@ public final class ApplicationConstants {
 		
 		/** constant for counter path employee*/
 		public static final String COUNTER_PATH = "count(//Employees/Employee)";
-				
-		/*
-		 * 
-		 * This method concatenate,String for compile path
-		 * 
-		 * */
 		
-		public static String getCompliePath(int number,String path2) {
-			String message = MessageFormat.format("{0}" + "{1}"+ "{2}",BASE_PATH, number, path2);
-			return message;
-		}
 	}
 }

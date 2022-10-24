@@ -11,7 +11,6 @@ import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
 
 import com.csse.domain.Employee;
-import com.csse.interfaces.IEmployeeDatabaseContext;
 import com.csse.pipeline.XMLTransfrom;
 import com.csse.util.ApplicationConstants;
 import com.csse.util.EmployeeDatabaseContext;
@@ -25,7 +24,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.sql.Statement;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class EmployeeService extends EmployeeTemplate {
@@ -64,7 +62,7 @@ public class EmployeeService extends EmployeeTemplate {
 	 */
 
 	@Override
-	public void employeeFromXml() {
+	public void configureemployeeDetailsFromXml() {
 		try {
 			for (Map<String, String> item : XMLTransfrom.xmlPaths()) {
 				
@@ -78,6 +76,8 @@ public class EmployeeService extends EmployeeTemplate {
 				employee.setDesignation(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION_KEY));
 				
 				employeeList.add(employee);
+				
+				logger.info(employee.toString() + "\n");
 				
 				
 			}
@@ -109,13 +109,21 @@ public class EmployeeService extends EmployeeTemplate {
 	}
 	
 	/**
-	 * Creates Employee table inside SQL database
-	 * @return void
-	 * @exception java.sql.SQLException
+	 * This method create employee table in database(apply table configuration)
+	 * 
+	 * @throws SQLException                 -Thrown when database access error
+	 *                                      occurs or this method is called on a
+	 *                                      closed connection
+	 * @throws SAXException                 -Encapsulate a general SAX error or
+	 *                                      warning
+	 * @throws IOException                  -Exception produced by failed or
+	 *                                      interrupted I/O operations
+	 *
+	 * @throws ParserConfigurationException -Indicate a serious configuration error
 	 */
 
 	@Override
-	public void employeeTableCreate() {
+	public void applyConfigurationEmployeeEntity() {
 		try {
 			
 			statement = connection.createStatement();
@@ -147,7 +155,7 @@ public class EmployeeService extends EmployeeTemplate {
 	 * @throws ParserConfigurationException -Indicate a serious configuration error
 	 */
 	@Override
-	public void employeesAdd() {
+	public void saveEmployee() {
 		try {
 			
 			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_THREE));
@@ -244,7 +252,7 @@ public class EmployeeService extends EmployeeTemplate {
 		
 		try {
 			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_FOUR));
-			preparedStatement.setString(1, employeeId);
+			preparedStatement.setString(ApplicationConstants.QueryCommandHandlers.COLUMN_INDEX_ONE, employeeId);
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -262,7 +270,7 @@ public class EmployeeService extends EmployeeTemplate {
 			
 			employeeList.add(employee);
 			
-			employeeOutput(employeeList);
+			dispalyEmployeeDetails(employeeList);
 			
 		}catch (SQLException ex) {
 			
@@ -301,6 +309,8 @@ public class EmployeeService extends EmployeeTemplate {
 	 *                                      interrupted I/O operations
 	 *
 	 * @throws ParserConfigurationException -Indicate a serious configuration error
+	 * 
+	 * @param String
 	 */
 
 	@Override
@@ -335,7 +345,7 @@ public class EmployeeService extends EmployeeTemplate {
 	}
 
 	@Override
-	public void employeeDisplay() {
+	public void getEmployeeDetails() {
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 		try {
 			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_FIVE));
@@ -374,7 +384,7 @@ public class EmployeeService extends EmployeeTemplate {
 			logger.log(Level.SEVERE, ex.getMessage());
 		}
 		
-		employeeOutput(employees);
+		dispalyEmployeeDetails(employees);
 		
 	}
 	
@@ -385,7 +395,7 @@ public class EmployeeService extends EmployeeTemplate {
 	 */
 	
 	@Override
-	public void employeeOutput(ArrayList<Employee> employeeList) {
+	public void dispalyEmployeeDetails(ArrayList<Employee> employeeList) {
 		System.out.println("Employee ID" + "\t\t" + "Full Name" + "\t\t" + "Address" + "\t\t" + "Faculty Name" + "\t\t"
 				+ "Department" + "\t\t" + "Designation" + "\n");
 		System.out
