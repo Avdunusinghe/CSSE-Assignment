@@ -12,6 +12,7 @@ import javax.xml.xpath.XPathExpressionException;
 import com.csse.domain.Employee;
 import com.csse.interfaces.IEmployeeDatabaseContext;
 import com.csse.pipeline.XMLTransfrom;
+import com.csse.util.ApplicationConstants;
 import com.csse.util.EmployeeDatabaseContext;
 import com.csse.util.QueryCommand;
 
@@ -30,7 +31,7 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	private final ArrayList<Employee> employeeList= new ArrayList<Employee>();
 	
 	private static final Logger log = Logger.getLogger(EmployeeService.class.getName());
-	private static Connection connection;
+	private static Connection connection = null;
 	private static Statement statement;
 
 	private PreparedStatement preparedStatement;
@@ -63,12 +64,12 @@ public class EmployeeService extends EmployeeTemplateMethod {
 				
 				Employee employee= new Employee();
 				
-				employee.setEmployeeId(docMap.get("XpathEmployeeIDKey"));
-				employee.setFullName(docMap.get("XpathEmployeeNameKey"));
-				employee.setAddress(docMap.get("XpathEmployeeAddressKey"));
-				employee.setFacultyName(docMap.get("XpathFacultyNameKey"));
-				employee.setDepartment(docMap.get("XpathDepartmentKey"));
-				employee.setDesignation(docMap.get("XpathDesignationKey"));
+				employee.setEmployeeId(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ID));
+				employee.setFullName(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_NAME));
+				employee.setAddress(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ADDRESS));
+				employee.setFacultyName(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_FACULTY));
+				employee.setDepartment(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DEPARTMENT));
+				employee.setDesignation(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION));
 				
 				employeeList.add(employee);
 				
@@ -110,10 +111,13 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	@Override
 	public void employeeTableCreate() {
 		try {
+			
 			statement = connection.createStatement();
 			statement.executeUpdate(QueryCommand.query("q2"));
 			statement.executeUpdate(QueryCommand.query("q1"));
+			
 		} catch (SQLException e) {
+			
 			log.log(Level.SEVERE,e.getMessage());
 		}
 		catch (Exception e) {
@@ -180,7 +184,7 @@ public class EmployeeService extends EmployeeTemplateMethod {
 			
 			ArrayList<Employee> empList = new ArrayList<Employee>();
 			empList.add(employee);
-			//employeeOutput(empList);
+			employeeOutput(empList);
 		}catch (SQLException e) {
 			log.log(Level.SEVERE,e.getMessage());
 		} catch (Exception e) {

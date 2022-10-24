@@ -60,19 +60,8 @@ public class EmployeeDatabaseContext extends Configuration  {
 				
 				logger.log(Level.SEVERE, ex.getMessage());
 			
-			}finally {
-				try {
-					
-					//if exception occurs, this will close the database connection 
-					
-					if(connection != null) {
-						connection.close();
-					}
-				} catch (SQLException ex) {
-					
-					logger.log(Level.SEVERE,ex.getMessage());
-				}
 			}
+			
 		}
 		
 		return connection;

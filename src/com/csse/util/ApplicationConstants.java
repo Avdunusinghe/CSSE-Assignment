@@ -12,8 +12,8 @@ public final class ApplicationConstants {
 	 * This Class includes all the common constants used ConfigUtil Class 
 	 */
 	
-	public static class ConfigUtil{
-		public static final String FILEPATH_STRING =  "../config/config.properties";
+	public static class Configuaration{
+		public static final String APPSETTING_STRING =  "../config/config.properties";
 	}
 	
 
@@ -21,25 +21,25 @@ public final class ApplicationConstants {
 	 * This Class includes all the common constants used QueryUtil Class 
 	 */
 	
-	public static class QueryUtil{
+	public static class QueryCommand{
 		public static final String EMPLOYEE_QUERY_PATH_STRING =  "src/com/csse/config/EmployeeQuery.xml";
 	}
 	
 
 	/**
-	 * This Class includes all the common constants used TransformUtil Class 
+	 * This Class includes all the common constants used XMLTransfrom Class 
 	 */
 	
-	public static class TransformUtil{
+	public static class XMLTransfrom{
 		
 		public static final String BASE_PATH = "//Employees/Employee[";
 		
-		public static final String SUB_PATH_EMP_ID ="]/EmployeeID/text()";
-		public static final String SUB_PATH_EMP_FULL_NAME ="]/EmployeeFullName/text()";
-		public static final String SUB_PATH_EMP_ADDRESS ="]/EmployeeFullAddress/text()";
-		public static final String SUB_PATH_EMP_FACULTY_NAME ="]/FacultyName/text()";
-		public static final String SUB_PATH_EMP_DEPARTMENT ="]/Department/text()";
-		public static final String SUB_PATH_EMP_DESIGNATION ="]/Designation/text()";
+		public static final String PATH_EMP_ID ="]/EmployeeID/text()";
+		public static final String PATH_EMP_FULL_NAME ="]/EmployeeFullName/text()";
+		public static final String PATH_EMP_ADDRESS ="]/EmployeeFullAddress/text()";
+		public static final String PATH_EMP_FACULTY_NAME ="]/FacultyName/text()";
+		public static final String PATH_EMP_DEPARTMENT ="]/Department/text()";
+		public static final String PATH_EMP_DESIGNATION ="]/Designation/text()";
 			
 		public static final String XPATH_EMPLOYEE_ID = "XpathEmployeeIDKey";
 		public static final String XPATH_EMPLOYEE_NAME = "XpathEmployeeNameKey";

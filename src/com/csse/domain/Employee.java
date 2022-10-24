@@ -1,5 +1,10 @@
 package com.csse.domain;
 
+/**
+ * 
+ * This is the Employee Entity class
+ *
+ */
 public class Employee {
 	
 	private String employeeId;
