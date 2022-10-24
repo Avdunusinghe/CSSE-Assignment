@@ -25,6 +25,7 @@ public class Main {
 	
 	/**
 	 * main method
+	 * @throws Exception 
 	 * 
 	 * @throws TransformerException                 -specifies an exceptional
 	 *                                              condition that occurred during
@@ -38,21 +39,24 @@ public class Main {
 		
 		try {
 			
-			try {
-				XMLTransfrom.requestTransform();
-			} catch (Exception ex) {
-				
-				logger.log(Level.SEVERE,  ex.getMessage());
-			}
+		    XMLTransfrom.requestTransform();
 			
 			EmployeeTemplate service = new EmployeeService();
 			
 			service.applyemployeeOperation();
 			//service.employeeGetById("EMP10004");
 			//service.employeeDelete("EMP10001");
-			service.getEmployeeDetails();
+			//service.getEmployeeDetails();
+			
+		} catch (TransformerException  ex) {
+			
+			logger.log(Level.SEVERE,  ex.getMessage());
 			
 		} catch (TransformerFactoryConfigurationError  ex) {
+			
+			logger.log(Level.SEVERE,  ex.getMessage());
+			
+		}catch (Exception ex) {
 			
 			logger.log(Level.SEVERE,  ex.getMessage());
 		}

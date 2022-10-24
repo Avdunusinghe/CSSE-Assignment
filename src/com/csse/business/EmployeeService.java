@@ -27,14 +27,14 @@ import java.sql.Statement;
 import java.util.Map;
 
 public class EmployeeService extends EmployeeTemplate {
+	
 	private final ArrayList<Employee> employeeList= new ArrayList<Employee>();
 	
 	private static final Logger logger = Logger.getLogger(EmployeeService.class.getName());
+	
 	private static Connection connection = null;
 	private static Statement statement;
-
 	private PreparedStatement preparedStatement;
-	
 	
 	public EmployeeService() {
 		
@@ -75,9 +75,9 @@ public class EmployeeService extends EmployeeTemplate {
 				employee.setDepartment(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DEPARTMENT_KEY));
 				employee.setDesignation(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION_KEY));
 				
-				employeeList.add(employee);
 				
-				logger.info(employee.toString() + "\n");
+				employeeList.add(employee);
+				System.out.println(employee.toString() + "\n");
 				
 				
 			}
@@ -154,6 +154,7 @@ public class EmployeeService extends EmployeeTemplate {
 	 *
 	 * @throws ParserConfigurationException -Indicate a serious configuration error
 	 */
+	
 	@Override
 	public void saveEmployee() {
 		try {
@@ -346,13 +347,17 @@ public class EmployeeService extends EmployeeTemplate {
 
 	@Override
 	public void getEmployeeDetails() {
+		
 		ArrayList<Employee> employees = new ArrayList<Employee>();
+		
 		try {
+			
 			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_FIVE));
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
+				
 				Employee employee = new Employee();
 				employee.setEmployeeId(resultSet.getString(1));
 				employee.setFullName(resultSet.getString(2));
@@ -396,6 +401,7 @@ public class EmployeeService extends EmployeeTemplate {
 	
 	@Override
 	public void dispalyEmployeeDetails(ArrayList<Employee> employeeList) {
+		
 		System.out.println("Employee ID" + "\t\t" + "Full Name" + "\t\t" + "Address" + "\t\t" + "Faculty Name" + "\t\t"
 				+ "Department" + "\t\t" + "Designation" + "\n");
 		System.out

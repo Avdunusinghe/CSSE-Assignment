@@ -35,12 +35,14 @@ public final class ApplicationConstants {
 	
 	public static class QueryCommand{
 		
+		/** constant for Query id TAG_NAME_STRING */
+		public static final String TAG_NAME = "query";
 		
-		public static final String TAG_NAME_STRING = "query";
+		/** constant for Query id one */
+		public static final String ATTRIBUTETAG = "id";
 		
-		public static final String ATTRIBUTETAG_STRING = "id";
-		
-		public static final String EMPLOYEE_QUERY_PATH_STRING =  "src/com/csse/config/EmployeeQuery.xml";
+		/** constant for Query id one */
+		public static final String EMPLOYEE_QUERY_PATH =  "src/com/csse/config/EmployeeQuery.xml";
 	}
 	
 	/**

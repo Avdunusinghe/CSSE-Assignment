@@ -30,14 +30,14 @@ public class QueryCommand extends Configuration {
 		
 			
 		_nodeList = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-				.parse(new File(ApplicationConstants.QueryCommand.EMPLOYEE_QUERY_PATH_STRING))
-				.getElementsByTagName(ApplicationConstants.QueryCommand.TAG_NAME_STRING);
+				.parse(new File(ApplicationConstants.QueryCommand.EMPLOYEE_QUERY_PATH))
+				.getElementsByTagName(ApplicationConstants.QueryCommand.TAG_NAME);
 		
 		for (int x = 0; x < _nodeList.getLength(); x++) {
 			
 			_element = (Element) _nodeList.item(x);
 			
-			if (_element.getAttribute(ApplicationConstants.QueryCommand.ATTRIBUTETAG_STRING).equals(id))
+			if (_element.getAttribute(ApplicationConstants.QueryCommand.ATTRIBUTETAG).equals(id))
 				break;
 		}
 		return _element.getTextContent().trim();
