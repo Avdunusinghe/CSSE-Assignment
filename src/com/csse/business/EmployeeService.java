@@ -64,6 +64,8 @@ public class EmployeeService extends EmployeeTemplate {
 	@Override
 	public void configureemployeeDetailsFromXml() {
 		try {
+			
+			
 			for (Map<String, String> item : XMLTransfrom.xmlPaths()) {
 				
 				Employee employee= new Employee();
@@ -77,8 +79,9 @@ public class EmployeeService extends EmployeeTemplate {
 				
 				
 				employeeList.add(employee);
-				System.out.println(employee.toString() + "\n");
 				
+				System.out.println(employee.getEmployeeId() + "\n" + employee.getFullName()+ "\n" + employee.getAddress() + "\n" + employee.getFacultyName() + "\n" + employee.getDepartment() + "/n" +  employee.getDesignation() + "/n");
+				System.out.println();
 				
 			}
 		} catch (NumberFormatException exception) {
