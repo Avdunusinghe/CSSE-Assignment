@@ -16,21 +16,28 @@ public class Configuration {
 	public static final Properties properties= new Properties();
 	
 	//Create logger instance 
-	public static final Logger log = Logger.getLogger(Configuration.class.getName());
+	public static final Logger logger = Logger.getLogger(Configuration.class.getName());
 	
 	static {
 		try {
 			
-			properties.load(QueryCommand.class.getResourceAsStream("../config/config.properties"));
+			properties.load(QueryCommand.class.getResourceAsStream(ApplicationConstants.Configuaration.APPSETTING_CONFIG_PATH));
 			
-		} catch (IOException e) {
-			log.log(Level.SEVERE,e.getMessage());
-		}catch(IllegalArgumentException e) {
-			log.log(Level.SEVERE,e.getMessage());
-		}catch(NullPointerException e) {
-			log.log(Level.SEVERE,e.getMessage());
-		}catch(Exception e) {
-			log.log(Level.SEVERE,e.getMessage());
+		} catch (IOException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		}catch(IllegalArgumentException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		}catch(NullPointerException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		}catch(Exception ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
 		}
 	}
 

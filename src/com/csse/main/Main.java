@@ -1,6 +1,7 @@
 package com.csse.main;
 
 import com.csse.business.EmployeeService;
+import com.csse.business.EmployeeTemplate;
 import com.csse.pipeline.XMLTransfrom;
 import java.util.logging.Logger;
 
@@ -44,10 +45,8 @@ public class Main {
 				logger.log(Level.SEVERE,  ex.getMessage());
 			}
 			
-			EmployeeService service = new EmployeeService();
-			service.employeeFromXml();
-			service.employeeTableCreate();
-			service.employeesAdd();
+			EmployeeTemplate service = new EmployeeService();
+			service.employeeOperation();
 			//service.employeeGetById("EMP10004");
 			//service.employeeDelete("EMP10001");
 			service.employeeDisplay();

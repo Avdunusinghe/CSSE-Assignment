@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.csse.domain.Employee;
 
-public abstract class EmployeeTemplateMethod {
+public abstract class EmployeeTemplate {
 	
 	public abstract void employeeFromXml();
 	
@@ -19,4 +19,14 @@ public abstract class EmployeeTemplateMethod {
 	public abstract void employeeDisplay();
 	
 	public abstract void employeeOutput(ArrayList<Employee> employeeList);
+	
+	public final void employeeOperation() {
+		
+		employeeFromXml();
+		
+		employeeTableCreate();
+		
+		employeesAdd();
+		
+	}
 }

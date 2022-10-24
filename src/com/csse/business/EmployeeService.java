@@ -1,13 +1,14 @@
 package com.csse.business;
 
 import java.util.ArrayList;
-
-
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
+
+import org.xml.sax.SAXException;
 
 import com.csse.domain.Employee;
 import com.csse.interfaces.IEmployeeDatabaseContext;
@@ -27,7 +28,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class EmployeeService extends EmployeeTemplateMethod {
+public class EmployeeService extends EmployeeTemplate {
 	private final ArrayList<Employee> employeeList= new ArrayList<Employee>();
 	
 	private static final Logger logger = Logger.getLogger(EmployeeService.class.getName());
@@ -42,58 +43,63 @@ public class EmployeeService extends EmployeeTemplateMethod {
 		connection = EmployeeDatabaseContext.databaseContextBuilder();
 	}
 	
+	
 	/**
-	 * 
 	 * Includes Database Data Storage functions and XML Data retrieval functions
 	 * 
-	 * XML data retrieval function : employeeFromXML 
+	 * @throws NumberFormatException        -Thrown to indicate that the application
+	 *                                      has attempted to convert a string to one
+	 *                                      of the numeric types
+	 * @throws XPathExpressionException     -indicate an error in an XPath
+	 *                                      expression.
+	 * @throws SQLException                 -Thrown when database access error
+	 *                                      occurs or this method is called on a
+	 *                                      closed connection
+	 * @throws SAXException                 -Encapsulate a general SAX error or
+	 *                                      warning
+	 * @throws IOException                  -Exception produced by failed or
+	 *                                      interrupted I/O operations
 	 *
+	 * @throws ParserConfigurationException -Indicate a serious configuration error
 	 */
 
 	@Override
-	/**
-	 * Stores data collected from the XML file inside an global variable
-	 * This information is accessible from any class
-	 * 
-	 *  @return void
-	 */
-
 	public void employeeFromXml() {
 		try {
-			for (Map<String, String> docMap : XMLTransfrom.xmlPaths()) {
+			for (Map<String, String> item : XMLTransfrom.xmlPaths()) {
 				
 				Employee employee= new Employee();
 				
-				employee.setEmployeeId(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ID_KEY));
-				employee.setFullName(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_NAME_KEY));
-				employee.setAddress(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ADDRESS_KEY));
-				employee.setFacultyName(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_FACULTY_KEY));
-				employee.setDepartment(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DEPARTMENT_KEY));
-				employee.setDesignation(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION_KEY));
+				employee.setEmployeeId(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ID_KEY));
+				employee.setFullName(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_NAME_KEY));
+				employee.setAddress(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ADDRESS_KEY));
+				employee.setFacultyName(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_FACULTY_KEY));
+				employee.setDepartment(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DEPARTMENT_KEY));
+				employee.setDesignation(item.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION_KEY));
 				
 				employeeList.add(employee);
 				
 				
 			}
-		} catch (IllegalArgumentException e) {
+		} catch (NumberFormatException exception) {
 			
-			logger.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE, exception.getMessage());
 			
-		}catch (NullPointerException e) {
+		} catch (XPathExpressionException exception) {
 			
-			logger.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE, exception.getMessage());
 			
-		}catch (RuntimeException e) {
+		} catch (SAXException exception) {
 			
-			logger.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE, exception.getMessage());
 			
-		}catch (ParserConfigurationException e) {
+		} catch (IOException exception) {
 			
-			logger.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE, exception.getMessage());
 			
-		}catch (XPathExpressionException e) {
+		} catch (ParserConfigurationException exception) {
 			
-			logger.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE, exception.getMessage());
 		}
 		catch (Exception e) {
 			
@@ -128,9 +134,17 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	}
 	
 	/**
-	 * Inserts a new employee to employee table in sql database
-	 * @return void
-	 * @exception java.sql.SQLException
+	 * This method ADD employee
+	 * 
+	 * @throws SQLException                 -Thrown when database access error
+	 *                                      occurs or this method is called on a
+	 *                                      closed connection
+	 * @throws SAXException                 -Encapsulate a general SAX error or
+	 *                                      warning
+	 * @throws IOException                  -Exception produced by failed or
+	 *                                      interrupted I/O operations
+	 *
+	 * @throws ParserConfigurationException -Indicate a serious configuration error
 	 */
 	@Override
 	public void employeesAdd() {
@@ -141,14 +155,45 @@ public class EmployeeService extends EmployeeTemplateMethod {
 			
 			for(Employee employee: employeeList) {
 				
-				preparedStatement.setString(1, employee.getEmployeeId());
-				preparedStatement.setString(2, employee.getFullName());
-				preparedStatement.setString(3, employee.getAddress());
-				preparedStatement.setString(4, employee.getFacultyName());
-				preparedStatement.setString(5, employee.getDepartment());
-				preparedStatement.setString(6, employee.getDesignation());
+				preparedStatement.setString
+				(
+						ApplicationConstants.QueryCommandHandlers.COLUMN_INDEX_ONE, 
+						employee.getEmployeeId()
+				);
+				
+				preparedStatement.setString
+				(
+						ApplicationConstants.QueryCommandHandlers.COLUMN_INDEX_TWO, 
+						employee.getFullName()
+			    );
+				
+				preparedStatement.setString
+				(
+						ApplicationConstants.QueryCommandHandlers.COLUMN_INDEX_THREE, 
+						employee.getAddress()
+				);
+				
+				preparedStatement.setString
+				(
+						ApplicationConstants.QueryCommandHandlers.COLUMN_INDEX_FOUR, 
+						employee.getFacultyName()
+				);
+				
+				preparedStatement.setString
+				(
+						ApplicationConstants.QueryCommandHandlers.COLUMN_INDEX_FIVE, 
+						employee.getDepartment()
+				);
+				
+				preparedStatement.setString
+				(
+						ApplicationConstants.QueryCommandHandlers.COLUMN_INDEX_SIX, 
+						employee.getDesignation()
+				);
+				
 				preparedStatement.addBatch();
 			}
+			
 			preparedStatement.executeBatch();
 			connection.commit();
 		
@@ -156,19 +201,40 @@ public class EmployeeService extends EmployeeTemplateMethod {
 			
 			logger.log(Level.SEVERE, ex.getMessage());
 			
-		} catch (Exception ex) {
+		} catch (SAXException ex) {
 			
 			logger.log(Level.SEVERE, ex.getMessage());
-		}
+			
+		} catch (IOException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (ParserConfigurationException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		}catch (Exception ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} 
 		
 		
 	}
 	
 	/**
-	 * provides employee information for given employee id
-	 * @return void
-	 * @param String
-	 * @exception java.sql.SQLException
+	 * This method GET a employee details
+	 * 
+	 * @param eid ID of employee to get details
+	 * @throws SQLException                 -Thrown when database access error
+	 *                                      occurs or this method is called on a
+	 *                                      closed connection
+	 * @throws SAXException                 -Encapsulate a general SAX error or
+	 *                                      warning
+	 * @throws IOException                  -Exception produced by failed or
+	 *                                      interrupted I/O operations
+	 *
+	 * @throws ParserConfigurationException -Indicate a serious configuration error
 	 */
 
 	@Override
@@ -202,18 +268,39 @@ public class EmployeeService extends EmployeeTemplateMethod {
 			
 			logger.log(Level.SEVERE, ex.getMessage());
 			
-		} catch (Exception ex) {
+		} catch (SAXException ex) {
 			
 			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (ParserConfigurationException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (IOException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		}catch (Exception ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
 		}
 		
 	}
 	
 	/**
-	 * read employee table from sql database
-	 * @return void
-	 * @param String
-	 * @exception java.sql.SQLException
+	 * This method DELETE a employee
+	 * 
+	 * @param eid ID of employee to delete
+	 * @throws SQLException                 -Thrown when database access error
+	 *                                      occurs or this method is called on a
+	 *                                      closed connection
+	 * @throws SAXException                 -Encapsulate a general SAX error or
+	 *                                      warning
+	 * @throws IOException                  -Exception produced by failed or
+	 *                                      interrupted I/O operations
+	 *
+	 * @throws ParserConfigurationException -Indicate a serious configuration error
 	 */
 
 	@Override
@@ -222,10 +309,27 @@ public class EmployeeService extends EmployeeTemplateMethod {
 			preparedStatement = connection.prepareStatement(QueryCommand.query(ApplicationConstants.QueryCommandHandlers.QUERY_SIX));
 			preparedStatement.setString(1, employeeId);
 			preparedStatement.executeUpdate();
-		}catch (SQLException e) {
-			logger.log(Level.SEVERE,e.getMessage());
-		} catch (Exception e) {
-			logger.log(Level.SEVERE,e.getMessage());
+			
+		} catch (SQLException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (SAXException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (IOException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (ParserConfigurationException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (Exception ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
 		}
 		
 	}
@@ -249,13 +353,25 @@ public class EmployeeService extends EmployeeTemplateMethod {
 				employees.add(employee);
 				
 			}
-		}catch (SQLException e) {
+		}catch (SQLException ex) {
 			
-			logger.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE, ex.getMessage());
 			
-		} catch (Exception e) {
+		} catch (SAXException ex) {
 			
-			logger.log(Level.SEVERE,e.getMessage());
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (IOException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (ParserConfigurationException ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
+			
+		} catch (Exception ex) {
+			
+			logger.log(Level.SEVERE, ex.getMessage());
 		}
 		
 		employeeOutput(employees);
@@ -263,10 +379,9 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	}
 	
 	/**
-	 * displays list of employees for given employees list
-	 * @return void
-	 * @param ArrayList<Employee>
-	 * @exception java.sql.SQLException
+	 * This method PRINT all employee details
+	 * 
+	 * @param employeeList ArrayList<Employee> Array of employee list to print
 	 */
 	
 	@Override
