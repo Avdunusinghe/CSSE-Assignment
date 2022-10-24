@@ -64,12 +64,12 @@ public class EmployeeService extends EmployeeTemplateMethod {
 				
 				Employee employee= new Employee();
 				
-				employee.setEmployeeId(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ID));
-				employee.setFullName(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_NAME));
-				employee.setAddress(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ADDRESS));
-				employee.setFacultyName(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_FACULTY));
-				employee.setDepartment(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DEPARTMENT));
-				employee.setDesignation(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION));
+				employee.setEmployeeId(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ID_KEY));
+				employee.setFullName(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_NAME_KEY));
+				employee.setAddress(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ADDRESS_KEY));
+				employee.setFacultyName(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_FACULTY_KEY));
+				employee.setDepartment(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DEPARTMENT_KEY));
+				employee.setDesignation(docMap.get(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION_KEY));
 				
 				employeeList.add(employee);
 				
@@ -103,7 +103,7 @@ public class EmployeeService extends EmployeeTemplateMethod {
 	}
 	
 	/**
-	 * Creates Employee table inside sql database
+	 * Creates Employee table inside SQL database
 	 * @return void
 	 * @exception java.sql.SQLException
 	 */

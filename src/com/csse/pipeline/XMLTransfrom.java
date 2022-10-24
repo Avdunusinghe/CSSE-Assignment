@@ -12,6 +12,8 @@ import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import org.w3c.dom.Document;
 
+import com.csse.util.ApplicationConstants;
+
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.TransformerFactory;
@@ -21,9 +23,9 @@ import javax.xml.xpath.XPathExpressionException;
 
 public class XMLTransfrom {
 	
-	private static final ArrayList<Map<String, String>> _employeeList= new ArrayList<Map<String, String>>();
+	private static final ArrayList<Map<String, String>> employeeDataSet= new ArrayList<Map<String, String>>();
 	
-	private static Map<String, String> _employeeData = null;
+	private static Map<String, String> employeeDetails = null;
 	
 	/**
 	 * 
@@ -33,13 +35,11 @@ public class XMLTransfrom {
 	
 	public static void  requestTransform() throws Exception {
 
-		Source _requestSource = new StreamSource(new File("src/com/csse/config/EmployeeRequest.xml"));
-		Source _modifiedSource = new StreamSource(new File("src/com/csse/config/Employee-modified.xsl"));
-		Result _responseResult = new StreamResult(new File("src/com/csse/config/EmployeeResponse.xml"));
-		
-	
-		
-		TransformerFactory.newInstance().newTransformer(_modifiedSource).transform(_requestSource, _responseResult);
+		Source requestSource = new StreamSource(new File(ApplicationConstants.XMLTransfrom.EMPLOYEE_REQUEST_PATH_STRING));
+		Source modifiedSource = new StreamSource(new File(ApplicationConstants.XMLTransfrom.EMPLOYEE_MODIFIED_PATH_STRING));
+		Result responseResult = new StreamResult(new File(ApplicationConstants.XMLTransfrom.EMPLOYEE_RESPONSE_PATH_STRING));
+
+		TransformerFactory.newInstance().newTransformer(modifiedSource).transform(requestSource, responseResult);
 	}
 	
 	/**
@@ -50,31 +50,63 @@ public class XMLTransfrom {
 	
 	public static ArrayList<Map<String, String>> xmlPaths() throws RuntimeException,ParserConfigurationException,NullPointerException,XPathExpressionException,IllegalArgumentException,Exception {
 
-		Document _doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-				.parse("src/com/csse/config/EmployeeResponse.xml");
+		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+				.parse(ApplicationConstants.XMLTransfrom.EMPLOYEE_RESPONSE_PATH_STRING);
 		
 		XPath xPath = XPathFactory.newInstance().newXPath();
-		int n = Integer.parseInt((String) xPath.compile("count(//Employees/Employee)").evaluate(_doc, XPathConstants.STRING));
-		for (int i = 1; i <= n; i++) {
+		int number = Integer.parseInt((String) xPath.compile(ApplicationConstants.XMLTransfrom.COUNTER_PATH).evaluate(document, XPathConstants.STRING));
+		for (int i = 1; i <= number; i++) {
 			
-			_employeeData = new HashMap<String, String>();
+			employeeDetails = new HashMap<String, String>();
 			
-			_employeeData.put("XpathEmployeeIDKey", (String) xPath.compile("//Employees/Employee[" + i + "]/EmployeeID/text()")
-					.evaluate(_doc, XPathConstants.STRING));
-			_employeeData.put("XpathEmployeeNameKey", (String) xPath.compile("//Employees/Employee[" + i + "]/EmployeeFullName/text()")
-					.evaluate(_doc, XPathConstants.STRING));
-			_employeeData.put("XpathEmployeeAddressKey",
-					(String) xPath.compile("//Employees/Employee[" + i + "]/EmployeeFullAddress/text()").evaluate(_doc,
-							XPathConstants.STRING));
-			_employeeData.put("XpathFacultyNameKey", (String) xPath.compile("//Employees/Employee[" + i + "]/FacultyName/text()")
-					.evaluate(_doc, XPathConstants.STRING));
-			_employeeData.put("XpathDepartmentKey", (String) xPath.compile("//Employees/Employee[" + i + "]/Department/text()")
-					.evaluate(_doc, XPathConstants.STRING));
-			_employeeData.put("XpathDesignationKey", (String) xPath.compile("//Employees/Employee[" + i + "]/Designation/text()")
-					.evaluate(_doc, XPathConstants.STRING));
-			_employeeList.add(_employeeData);
+			employeeDetails.put(
+					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ID_KEY, 
+					(String) xPath.compile(
+							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_ID)
+					.evaluate(document, XPathConstants.STRING
+					));
+			
+			employeeDetails.put(
+					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_NAME_KEY, 
+					(String) xPath.compile(
+							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_FULL_NAME)
+					.evaluate(document, XPathConstants.STRING
+					));
+			
+			
+			employeeDetails.put(
+					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_ADDRESS_KEY, 
+					(String) xPath.compile(
+							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_ADDRESS)
+					.evaluate(document, XPathConstants.STRING
+					));
+			
+			
+			employeeDetails.put(
+					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_FACULTY_KEY,
+					(String) xPath.compile(
+							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_FACULTY_NAME)
+					.evaluate(document, XPathConstants.STRING
+					));
+			
+			
+			employeeDetails.put(
+					ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DEPARTMENT_KEY,
+					(String) xPath.compile(
+							ApplicationConstants.XMLTransfrom.BASE_PATH + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_DEPARTMENT)
+					.evaluate(document, XPathConstants.STRING
+					));
+			
+			
+			employeeDetails.put(ApplicationConstants.XMLTransfrom.XPATH_EMPLOYEE_DESIGNATION_KEY, 
+					(String) xPath.compile(ApplicationConstants.XMLTransfrom.BASE_PATH  + i + ApplicationConstants.XMLTransfrom.PATH_EMPLOYEE_DESIGNATION )
+					.evaluate(document, XPathConstants.STRING
+					));
+			
+			employeeDataSet.add(employeeDetails);
 		}
-		return _employeeList;
+		
+		return employeeDataSet;
 		
 		
 	}

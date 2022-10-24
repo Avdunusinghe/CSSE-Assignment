@@ -34,19 +34,19 @@ public final class ApplicationConstants {
 		
 		public static final String BASE_PATH = "//Employees/Employee[";
 		
-		public static final String PATH_EMP_ID ="]/EmployeeID/text()";
-		public static final String PATH_EMP_FULL_NAME ="]/EmployeeFullName/text()";
-		public static final String PATH_EMP_ADDRESS ="]/EmployeeFullAddress/text()";
-		public static final String PATH_EMP_FACULTY_NAME ="]/FacultyName/text()";
-		public static final String PATH_EMP_DEPARTMENT ="]/Department/text()";
-		public static final String PATH_EMP_DESIGNATION ="]/Designation/text()";
+		public static final String PATH_EMPLOYEE_ID ="]/EmployeeID/text()";
+		public static final String PATH_EMPLOYEE_FULL_NAME ="]/EmployeeFullName/text()";
+		public static final String PATH_EMPLOYEE_ADDRESS ="]/EmployeeFullAddress/text()";
+		public static final String PATH_EMPLOYEE_FACULTY_NAME ="]/FacultyName/text()";
+		public static final String PATH_EMPLOYEE_DEPARTMENT ="]/Department/text()";
+		public static final String PATH_EMPLOYEE_DESIGNATION ="]/Designation/text()";
 			
-		public static final String XPATH_EMPLOYEE_ID = "XpathEmployeeIDKey";
-		public static final String XPATH_EMPLOYEE_NAME = "XpathEmployeeNameKey";
-		public static final String XPATH_EMPLOYEE_ADDRESS = "XpathEmployeeAddressKey";
-		public static final String XPATH_EMPLOYEE_FACULTY = "XpathFacultyNameKey";
-		public static final String XPATH_EMPLOYEE_DEPARTMENT = "XpathDepartmentKey";
-		public static final String XPATH_EMPLOYEE_DESIGNATION = "XpathDesignationKey";
+		public static final String XPATH_EMPLOYEE_ID_KEY = "XpathEmployeeIDKey";
+		public static final String XPATH_EMPLOYEE_NAME_KEY = "XpathEmployeeNameKey";
+		public static final String XPATH_EMPLOYEE_ADDRESS_KEY = "XpathEmployeeAddressKey";
+		public static final String XPATH_EMPLOYEE_FACULTY_KEY = "XpathFacultyNameKey";
+		public static final String XPATH_EMPLOYEE_DEPARTMENT_KEY = "XpathDepartmentKey";
+		public static final String XPATH_EMPLOYEE_DESIGNATION_KEY = "XpathDesignationKey";
 				
 		public static final String EMPLOYEE_REQUEST_PATH_STRING  = "src/com/csse/config/EmployeeRequest.xml";
 		public static final String EMPLOYEE_MODIFIED_PATH_STRING = "src/com/csse/config/Employee-modified.xsl";
